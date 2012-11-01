@@ -1,0 +1,3 @@
+edu.bsu.registrator.web.customfilter.impl.SecondCustomFilter
+edu.bsu.registrator.web.customfilter.impl.FirstCustomFilter
+edu.bsu.registrator.web.customfilter.impl.ThirdCustomFilter

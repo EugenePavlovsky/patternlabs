@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                             http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+  <welcome-file-list>
+    <welcome-file>html</welcome-file>
+  </welcome-file-list>
+  <filter>
+    <filter-name>SynchronizationMarkingFilter</filter-name>
+    <filter-class>edu.bsu.registrator.web.filter.SynchronizationMarkingFilter</filter-class>
+    <init-param>
+      <param-name>COMMAND</param-name>
+      <param-value>edu.bsu.registrator.web.command.impl.SynchronizationCommand</param-value>
+    </init-param>
+  </filter>
+
+  <servlet>
+    <servlet-name>InitializationServlet</servlet-name>
+    <servlet-class>edu.bsu.registrator.web.servlet.InitializationServlet</servlet-class>
+    <init-param>
+      <param-name>ROOT_URL</param-name>
+      <param-value>/html</param-value>
+    </init-param>
+    <init-param>
+      <param-name>SYNCH_TOKEN_KEY</param-name>
+      <param-value>synchToken</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ERROR_FLAG_KEY</param-name>
+      <param-value>errorFlag</param-value>
+    </init-param>
+    <init-param>
+      <param-name>COMMAND</param-name>
+      <param-value>edu.bsu.registrator.web.command.impl.DataHardCodeCommand</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>ControllerServlet</servlet-name>
+    <servlet-class>edu.bsu.registrator.web.servlet.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>FILTER_CONFIG_FILE</param-name>
+      <param-value>/WEB-INF/filter-config.txt</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+
+  <filter-mapping>
+    <filter-name>SynchronizationMarkingFilter</filter-name>
+    <url-pattern>/html/*</url-pattern>
+  </filter-mapping>
+
+  <servlet-mapping>
+    <servlet-name>InitializationServlet</servlet-name>
+    <url-pattern>/nonexistence</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ControllerServlet</servlet-name>
+    <url-pattern>/html/*</url-pattern>
+  </servlet-mapping>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/html/error</location>
+  </error-page>
+  <error-page>
+    <exception-type>edu.bsu.registrator.web.exception.InfrastructureException</exception-type>
+    <location>/html/error</location>
+  </error-page>
+</web-app>
